@@ -1,18 +1,23 @@
 sinatra_key_server
 ==================
 Generate a new key
+
 http://localhost:9292/generate
 
 Fetch a key
+
 http://localhost:9292/get
 
 Keep a key alive
+
 http://localhost:9292/keep_alive?key=jrwzqhxoaipvxthxdkkpnzuaileqjgnsfmqlfbtqkafsbfjmkc
 
 Unblock a Key
+
 http://localhost:9292/unblock?key=jrwzqhxoaipvxthxdkkpnzuaileqjgnsfmqlfbtqkafsbfjmkc
 
 Delete a Key
+
 http://localhost:9292/delete?key=jrwzqhxoaipvxthxdkkpnzuaileqjgnsfmqlfbtqkafsbfjmkc
 
 The Question
