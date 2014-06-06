@@ -14,7 +14,8 @@ class KeyServer < Sinatra::Application
 		ret = if key
 			key
 		else
-			"Key not Found"
+			status 404
+			body 'Key not Found'
 		end
 	end
 
@@ -22,7 +23,8 @@ class KeyServer < Sinatra::Application
 		if s.unblock(params[:key])
 			"Key Unblocked"
 		else
-			"Key not Found"
+			status 404
+			body 'Key not Found'
 		end
 	end
 
@@ -30,7 +32,8 @@ class KeyServer < Sinatra::Application
 		if s.delete(params[:key])
 			"Key Deleted"
 		else
-			"Key not Found"
+			status 404
+			body 'Key not Found'
 		end
 	end
 
@@ -38,7 +41,8 @@ class KeyServer < Sinatra::Application
 		if s.keep_alive(params[:key])
 			"Successful"
 		else
-			"Key not Found"
+			status 404
+			body 'Key not Found'
 		end
 	end
 end

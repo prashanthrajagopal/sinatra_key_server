@@ -19,6 +19,8 @@ class BackgroundJob
 					STDERR.puts "#{Time.now} - DELETING #{key}"
 					$key_list["available"].delete key
 					$time_keeper.delete key
+					STDERR.puts "KEY LIST - #{$key_list.inspect}"
+					STDERR.puts "TIME KEEPER - #{$time_keeper.inspect}"
 				end
 			end
 		end
@@ -29,8 +31,11 @@ class BackgroundJob
 			$key_list["blocked"].each do |key|
 				if Time.now - $time_keeper[key] >= 60.0
 					STDERR.puts "#{Time.now} - RELEASING #{key}"
-					unblock(key)
+					$key_list["available"] << key
+					$key_list["blocked"].delete(key)
 					$time_keeper[key] = Time.now
+					STDERR.puts "KEY LIST - #{$key_list.inspect}"
+					STDERR.puts "TIME KEEPER - #{$time_keeper.inspect}"
 				end
 			end
 		end

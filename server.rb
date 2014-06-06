@@ -1,4 +1,5 @@
 require_relative './bg_job'
+require 'pry'
 
 class Server
 	def initialize
@@ -6,7 +7,8 @@ class Server
 	end
 
 	def generate_key
-		key = `$(which openssl) rand -base64 32`.chomp.gsub('/','')
+		# key = `$(which openssl) rand -base64 32`.chomp.gsub('/','')
+		key = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
 		$key_list["available"] << key
 		$time_keeper[key] = Time.now
 		STDERR.puts "#{Time.now} - Key Generated - #{key}"
@@ -26,7 +28,7 @@ class Server
 
 	def unblock(key)
 		status = false
-		if($key_list["blocked"] != [] || $key_list["blocked"].include?(key))
+		if($key_list["blocked"].include?(key))
 			$key_list["available"] << key
 			$key_list["blocked"].delete(key)
 			status = true
@@ -53,14 +55,10 @@ class Server
 	def keep_alive(key)
 		status = false
 		if($key_list["blocked"].include?(key))
-			time_keeper[key] = Time.now
+			$time_keeper[key] = Time.now
 			status = true
 		end
 		STDERR.puts "#{Time.now} - #{status} Returning for Keep Alive - #{key}"
-		STDERR.puts "****************************************\n#{$key_list.inspect}\n****************************************\n"
-		STDERR.puts "#{$time_keeper.inspect}\n****************************************\n"
 		return status
 	end
-
-	
 end
